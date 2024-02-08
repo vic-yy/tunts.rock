@@ -1,6 +1,6 @@
 const { google } = require('googleapis');
 
-// Função para autenticar a API do Google Sheets
+// Function to authenticate the Google Sheets API
 async function authenticateGoogleSheets() {
     try {
         const auth = new google.auth.GoogleAuth({
@@ -17,24 +17,23 @@ async function authenticateGoogleSheets() {
 
         return { auth, sheets };
     } catch (error) {
-        console.error('Erro na autenticação do Google Sheets:', error.message);
+        console.error('Error authenticating Google Sheets:', error.message);
         throw error;
     }
 }
 
-
-// Função para escrever no Google Sheets
+// Function to write to Google Sheets
 async function writeToGoogleSheets(data) {
     try {
         const { auth, sheets } = await authenticateGoogleSheets();
 
-        // ID do documento do Google Sheets
+        // ID of the Google Sheets document
         const spreadSheetId = '1v43MQYzn7uJeMZ67emVy5qjf7uzOOCytpLQ_MbI4JqU';
 
-        // Intervalo ajustado para atualização de dados
+        // Adjusted range for data update
         const updateRange = 'engenharia_de_software!G4:H';
 
-        // Atualizando o Google Sheets com os novos dados
+        // Updating Google Sheets with new data
         await sheets.spreadsheets.values.update({
             spreadsheetId: spreadSheetId,
             range: updateRange,
@@ -44,46 +43,46 @@ async function writeToGoogleSheets(data) {
             },
         });
 
-        console.log('Dados dos alunos atualizados com sucesso.');
+        console.log('Student data updated successfully.');
     } catch (error) {
-        console.error('Erro ao atualizar o Google Sheets:', error.message);
+        console.error('Error updating Google Sheets:', error.message);
     }
 }
 
-// Função para calcular a situação de cada aluno e atualizar o Google Sheets
+// Function to calculate the situation for each student and update Google Sheets
 async function calculateStudentSituation() {
     try {
         const { sheets } = await authenticateGoogleSheets();
 
-        // ID do documento do Google Sheets
+        // ID of the Google Sheets document
         const spreadSheetId = '1v43MQYzn7uJeMZ67emVy5qjf7uzOOCytpLQ_MbI4JqU';
 
-        // Intervalo ajustado com base na célula inicial
+        // Adjusted range based on the starting cell
         const range = 'engenharia_de_software!B4:F';
 
-        // Obtendo os valores do documento do Google Sheets
+        // Getting values from the Google Sheets document
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: spreadSheetId,
             range: range,
         });
 
-        // Obtendo as linhas da resposta
+        // Getting rows from the response
         const rows = response.data.values;
 
         if (rows && rows.length > 0) {
             const updatedData = rows.map(row => {
                 const [name, Faltas, P1, P2, P3] = row;
 
-                // Convertendo valores de string para números
+                // Converting string values to numbers
                 const P1Value = parseInt(P1) / 10;
                 const P2Value = parseInt(P2) / 10;
                 const P3Value = parseInt(P3) / 10;
                 const FaltasValue = parseInt(Faltas);
 
-                // Calculando a média
+                // Calculating average
                 const average = Math.round((P1Value + P2Value + P3Value) / 3);
 
-                // Calculando a situação
+                // Calculating the situation
                 let situation = '';
                 let naf = 0;
 
@@ -94,20 +93,20 @@ async function calculateStudentSituation() {
                 } else if (average >= 5 && average < 7) {
                     situation = 'Exame Final';
 
-                    // Calculando o NAF (Nota para Aprovação Final)
+                    // Calculating NAF (Grade needed to pass)
                     naf = Math.ceil((10 - average));
                 } else {
                     situation = 'Aprovado';
                 }
 
                 console.log(`
-                    Nome: ${name}
+                    Name: ${name}
                     P1: ${P1Value}
                     P2: ${P2Value}
                     P3: ${P3Value}
                     Faltas: ${FaltasValue}
-                    Média: ${average}
-                    Situação: ${situation}
+                    Average: ${average}
+                    Situation: ${situation}
                     NAF: ${situation === 'Exame Final' ? naf : 0}
                     ------------------------------------
                 `);
@@ -118,15 +117,15 @@ async function calculateStudentSituation() {
                 ];
             });
 
-            // Chama a função para escrever na tabela
+            // Call the function to write to the table
             await writeToGoogleSheets(updatedData);
         } else {
-            console.log('Nenhum dado encontrado');
+            console.log('No data found');
         }
     } catch (error) {
-        console.error('Erro ao calcular a situação dos alunos:', error.message);
+        console.error('Error calculating student situation:', error.message);
     }
 }
 
-// Chama a função para calcular a situação de cada aluno e atualizar o Google Sheets
+// Call the function to calculate the situation for each student and update Google Sheets
 calculateStudentSituation();
