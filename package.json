@@ -1,0 +1,57 @@
+{
+  "name": "google-sheets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "agent-base": "^7.1.0",
+    "asynckit": "^0.4.0",
+    "axios": "^1.6.7",
+    "base64-js": "^1.5.1",
+    "bignumber.js": "^9.1.2",
+    "buffer-equal-constant-time": "^1.0.1",
+    "combined-stream": "^1.0.8",
+    "debug": "^4.3.4",
+    "delayed-stream": "^1.0.0",
+    "ecdsa-sig-formatter": "^1.0.11",
+    "extend": "^3.0.2",
+    "follow-redirects": "^1.15.5",
+    "form-data": "^4.0.0",
+    "gaxios": "^6.2.0",
+    "gcp-metadata": "^6.1.0",
+    "google-auth-library": "^9.6.3",
+    "google-spreadsheet": "^4.1.1",
+    "googleapis": "^132.0.0",
+    "gtoken": "^7.1.0",
+    "https-proxy-agent": "^7.0.2",
+    "is-stream": "^2.0.1",
+    "json-bigint": "^1.0.0",
+    "jwa": "^2.0.0",
+    "jws": "^4.0.0",
+    "lodash": "^4.17.21",
+    "mime-db": "^1.52.0",
+    "mime-types": "^2.1.35",
+    "ms": "^2.1.2",
+    "node-fetch": "^2.7.0",
+    "nodemon": "^3.0.3",
+    "proxy-from-env": "^1.1.0",
+    "safe-buffer": "^5.2.1",
+    "tr46": "^0.0.3",
+    "webidl-conversions": "^3.0.1",
+    "whatwg-url": "^5.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vic-yy/tunts.rock.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vic-yy/tunts.rock/issues"
+  },
+  "homepage": "https://github.com/vic-yy/tunts.rock#readme"
+}
