@@ -4,3 +4,5 @@ Project for the techinical test of Tunts.Rock:
    - git clone git@github.com:vic-yy/tunts.rock.git
    -  npm install
    -  npm start
+
+-Observation: Don't forget to enter the directory 
